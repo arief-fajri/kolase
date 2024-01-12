@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte';
 
-  export let rows = 2;
+  export let rows = 1;
   export let value = '';
   export let placeholder = 'type something';
   export let label = 'LABEL';
@@ -9,6 +9,7 @@
   export let focusColor = 'rgb(167 139 250)';
   export let disabledColor = '#aaa';
   export let fixedHeigh = false;
+  export let maxHeight = '4rem';
   export let labelClass = '';
   export let inputClass = '';
   export let wrapperClass = '';
@@ -19,9 +20,11 @@
   const dispatch = createEventDispatcher();
 
   const handleInput = (e) => {
-    if (!fixedHeigh) {
-      const parent = e.target.parentNode;
-      parent.dataset.value = e.target.value;
+    const parent = e.target.parentNode;
+    parent.dataset.value = e.target.value;
+
+    if (fixedHeigh) {
+      inputComp.style.maxHeight = maxHeight;
     }
 
     const { value: _value } = e.target;
@@ -38,8 +41,14 @@
   {#if label}
     <span class="label {labelClass}">{label}</span>
   {/if}
-  <textarea class={inputClass} class:disabled on:input={handleInput} {rows} {placeholder} {disabled}
-    >{value || ''}</textarea
+  <textarea
+    bind:this={inputComp}
+    class={inputClass}
+    class:disabled
+    on:input={handleInput}
+    {rows}
+    {placeholder}
+    {disabled}>{value || ''}</textarea
   >
 </label>
 
