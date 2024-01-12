@@ -2,17 +2,16 @@
   import { createEventDispatcher } from 'svelte';
 
   export let type = '';
-  export let rows = 1;
   export let value = '';
   export let placeholder = 'type something';
-  export let label = 'TEXT';
-  export let isStacked = true;
+  export let label = '';
   export let border = 'solid 1px';
   export let focusColor = 'rgb(167 139 250)';
-  export let fixedHeigh;
+  export let disabledColor = '#aaa';
   export let labelClass = '';
   export let inputClass = '';
   export let wrapperClass = '';
+  export let disabled = true;
 
   let localType = '';
   let firstLoad;
@@ -31,11 +30,6 @@
   const dispatch = createEventDispatcher();
 
   const handleInput = (e) => {
-    if (!fixedHeigh) {
-      const parent = e.target.parentNode;
-      parent.dataset.value = e.target.value;
-    }
-
     const { value: _value } = e.target;
 
     let newValue = value;
@@ -54,22 +48,22 @@
 </script>
 
 <label
-  class="input-sizer {wrapperClass}"
-  class:stacked={isStacked}
-  style="--border:{border}; --focus-color: {focusColor};"
+  class="input-container {wrapperClass}"
+  style="--border:{border}; --focus-color: {focusColor}; --disabled-color: {disabledColor};"
 >
   {#if label}
-    <span class="label {labelClass}">{label}</span>
+    <p class="label {labelClass}">{label}</p>
   {/if}
-  {#if type === 'textarea'}
-    <textarea class={inputClass} value={value || ''} on:input={handleInput} {rows} {placeholder}
-    ></textarea>
-  {:else}
+  <div class="input-wrapper" class:disabled>
+    <slot name="prefix">
+      <p style="margin: 0;">Rp</p>
+    </slot>
     <input
       type={localType}
       class={inputClass}
       value={value || ''}
       {placeholder}
+      {disabled}
       on:keyup={handleInput}
       on:keydown={(e) => {
         const { key } = e;
@@ -80,54 +74,52 @@
         }
       }}
     />
-  {/if}
+    <slot name="suffix">
+      <p style="margin: 0;">%</p>
+    </slot>
+  </div>
 </label>
 
 <style>
-  .input-sizer {
-    display: inline-grid;
-    vertical-align: top;
-    position: relative;
+  .input-container {
     width: 100%;
   }
-  .input-sizer.stacked {
-    align-items: stretch;
-  }
-  .input-sizer.stacked::after,
-  .input-sizer.stacked input,
-  .input-sizer.stacked textarea {
-    grid-area: 2/1;
-  }
-  .input-sizer::after,
-  .input-sizer input,
-  .input-sizer textarea {
-    width: auto;
-    min-width: 1rem;
-    grid-area: 1/2;
+  .input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    /* width: 100%; */
     font: inherit;
-    padding: 6px 10px;
-    resize: none;
+    padding: 0 12px;
+    height: 34px;
+    border: var(--border);
+    border-radius: 0.25rem;
+  }
+  .input-wrapper input {
+    width: 100%;
+    padding: 0;
     background: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    border: var(--border);
-    border-radius: 0.25rem;
+    border: none;
   }
-  .input-sizer::after {
-    content: attr(data-value) ' ';
-    visibility: hidden;
-    white-space: pre-wrap;
-  }
-  .input-sizer:focus-within textarea:focus,
-  .input-sizer:focus-within input:focus {
+  .input-wrapper:focus-within {
     outline: none;
     border-color: var(--focus-color);
     box-shadow: 0px 0px 10px -2px var(--focus-color);
   }
-  .input-sizer > .label {
-    /* font-size: 0.8rem; */
-    /* font-weight: bold; */
-    padding: 0.25rem;
+  .input-wrapper:focus-within input:focus {
+    outline: none;
+  }
+  .label {
+    font-size: 0.8em;
+    font-weight: bold;
+    padding: 0.5rem 0.25rem;
+    margin: 0;
+  }
+  .input-wrapper.disabled {
+    background: var(--disabled-color);
+    opacity: 0.5;
   }
 </style>
