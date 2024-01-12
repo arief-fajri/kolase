@@ -1,29 +1,85 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
+
   export let type = '';
   export let rows = 1;
   export let value = '';
   export let placeholder = 'type something';
   export let label = 'TEXT';
   export let isStacked = true;
-  export let border = 'none';
+  export let border = 'solid 1px';
+  export let focusColor = 'rgb(167 139 250)';
+  export let fixedHeigh;
+  export let labelClass = '';
+  export let inputClass = '';
+  export let wrapperClass = '';
+
+  let localType = '';
+  let firstLoad;
+
+  if (['text', 'email', 'password', 'search', 'tel', 'url'].includes(type)) {
+    localType = type || 'text';
+  }
+
+  $: if (value && !firstLoad) {
+    firstLoad = true;
+    if (type === 'number') {
+      value = value.toLocaleString('id-ID');
+    }
+  }
+
+  const dispatch = createEventDispatcher();
+
+  const handleInput = (e) => {
+    if (!fixedHeigh) {
+      const parent = e.target.parentNode;
+      parent.dataset.value = e.target.value;
+    }
+
+    const { value: _value } = e.target;
+
+    let newValue = value;
+
+    if (type === 'number') {
+      let input = _value.replace(/[\D\s\._\-]+/g, '');
+      input = input ? parseInt(input, 10) : 0;
+      newValue = input.toLocaleString('id-ID');
+    } else {
+      newValue = _value;
+    }
+
+    value = newValue;
+    dispatch('input', newValue);
+  };
 </script>
 
-<label class="input-sizer" class:stacked={isStacked} style="--border={border};">
+<label
+  class="input-sizer {wrapperClass}"
+  class:stacked={isStacked}
+  style="--border:{border}; --focus-color: {focusColor};"
+>
   {#if label}
-    <span>{label}</span>
+    <span class="label {labelClass}">{label}</span>
   {/if}
   {#if type === 'textarea'}
-    <textarea
-      value={value || ''}
-      on:input={(e) => {
-        const parent = e.target.parentNode;
-        parent.dataset.value = e.target.value;
-      }}
-      {rows}
-      {placeholder}
+    <textarea class={inputClass} value={value || ''} on:input={handleInput} {rows} {placeholder}
     ></textarea>
   {:else}
-    <input type="text" value={value || ''} {placeholder} />
+    <input
+      type={localType}
+      class={inputClass}
+      value={value || ''}
+      {placeholder}
+      on:keyup={handleInput}
+      on:keydown={(e) => {
+        const { key } = e;
+        if (key !== 'Enter' && key !== 'Backspace' && key !== 'ArrowLeft' && key !== 'ArrowRight') {
+          if (!/[\d]/.test(key) && type === 'number') {
+            e.preventDefault();
+          }
+        }
+      }}
+    />
   {/if}
 </label>
 
@@ -31,14 +87,10 @@
   .input-sizer {
     display: inline-grid;
     vertical-align: top;
-    align-items: center;
     position: relative;
-    border: solid 1px;
-    padding: 0.25em 0.5em;
-    margin: 5px;
+    width: 100%;
   }
   .input-sizer.stacked {
-    padding: 0.5em;
     align-items: stretch;
   }
   .input-sizer.stacked::after,
@@ -50,45 +102,32 @@
   .input-sizer input,
   .input-sizer textarea {
     width: auto;
-    min-width: 1em;
+    min-width: 1rem;
     grid-area: 1/2;
     font: inherit;
-    padding: 0.25em;
-    margin: 0;
+    padding: 6px 10px;
     resize: none;
     background: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    border: none;
-  }
-  .input-sizer span {
-    padding: 0.25em;
+    border: var(--border);
+    border-radius: 0.25rem;
   }
   .input-sizer::after {
     content: attr(data-value) ' ';
     visibility: hidden;
     white-space: pre-wrap;
   }
-  .input-sizer:focus-within {
-    outline: solid 1px blue;
-    box-shadow: 4px 4px 0px blue;
-  }
-  .input-sizer:focus-within > span {
-    color: blue;
-  }
   .input-sizer:focus-within textarea:focus,
   .input-sizer:focus-within input:focus {
     outline: none;
+    border-color: var(--focus-color);
+    box-shadow: 0px 0px 10px -2px var(--focus-color);
   }
-
-  .input-sizer {
-    /* box-shadow: 4px 4px 0px #000; */
-  }
-  .input-sizer > span {
-    text-transform: uppercase;
-    font-size: 0.8em;
-    font-weight: bold;
-    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.15);
+  .input-sizer > .label {
+    /* font-size: 0.8rem; */
+    /* font-weight: bold; */
+    padding: 0.25rem;
   }
 </style>

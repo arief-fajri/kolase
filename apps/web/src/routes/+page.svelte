@@ -5,4 +5,6 @@
 <h1>Web</h1>
 <p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
 
-<InputText type="textarea" />
+<div style="width: 320px;">
+	<InputText type="textarea" />
+</div>
