@@ -1,5 +1,5 @@
 <script>
-	import { InputText, InputTextarea, Modal } from '@kolase/ui';
+	import { InputText, InputTextarea, Modal, Button } from '@kolase/ui';
 
 	let openModal;
 </script>
@@ -15,7 +15,7 @@
 	<InputTextarea rows={3} />
 </div>
 
-<div style="width: 320px; margin-top: 12px;">
+<div style="margin-top: 12px;">
 	<button
 		on:click={() => {
 			openModal = true;
@@ -23,6 +23,16 @@
 	>
 		Open Modal
 	</button>
+
+	<div style="margin-top:6px">
+		<Button variant="primary"></Button>
+	</div>
+	<div style="margin-top:6px">
+		<Button variant="secondary"></Button>
+	</div>
+	<div style="margin-top:6px">
+		<Button variant="tertiary"></Button>
+	</div>
 </div>
 
 <Modal bind:visible={openModal}><p style="padding: 4px; margin: 0px">cek</p></Modal>
