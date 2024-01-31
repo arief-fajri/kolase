@@ -6,4 +6,6 @@
 	<title>KOLASE</title>
 </svelte:head>
 
-<slot />
+<main class="p-8">
+	<slot />
+</main>

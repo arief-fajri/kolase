@@ -21,7 +21,7 @@
   class:isSelected
   class:isFullRounded
   data-text={text}
-  disabled={disabled || processing}
+  {disabled}
   on:click={() => {
     if (!disabled || !processing) {
       dispatch('click');
@@ -29,9 +29,9 @@
   }}
 >
   {#if processing}
-    <div class="flex items-center gap-2">
-      <p>memproses...</p>
-    </div>
+    <slot name="processing">
+      <p style="white-space: nowrap;">memproses...</p>
+    </slot>
   {:else}
     <slot>
       <p style="white-space: nowrap;">{text}</p>
@@ -95,70 +95,34 @@
     background: var(--primary-container);
   }
 
-  .btn.tag {
-    background: transparent;
-    /* padding: 0 !important; */
-    color: var(--primary-container);
-  }
-  .btn.tag:hover {
-    color: var(--primary);
-    box-shadow: inset 0 0 0 1px var(--primary);
-  }
-
   .btn.tab {
     box-shadow: inset 0 0 0 1px var(--primary-container);
     color: var(--primary);
+  }
+  .btn.tab:hover {
+    background: var(--primary-container);
   }
 
   .btn.label {
     background: var(--primary-container);
     color: var(--primary);
   }
-
-  .btn.menu:hover,
-  .btn.tab:hover {
-    background: var(--primary-container);
-  }
-
-  .btn.menu.isActive {
-    color: var(--primary);
-    background: none;
-    /* font-weight: 700; */
-  }
-
-  .btn.menu.isActive::after {
-    content: '';
-    position: absolute;
-    left: 0.5rem;
-    top: 1.8rem;
-    width: calc(100% - 1rem);
-    height: 3px;
-    background: var(--primary);
-    border-radius: 9999px;
-  }
-
-  .btn.isActive,
-  .btn.isSelected,
-  .btn.label:hover,
-  .btn.isActive:hover,
-  .btn.isSelected:hover {
+  .btn.label:hover {
     box-shadow: none;
     color: var(--on-primary);
     background: var(--primary);
   }
 
-  .btn.isSelected,
-  .btn.isActive {
-    cursor: default;
+  .btn.textOnly {
+    padding: 0 !important;
+    text-shadow:
+      -0.25px -0.25px 0 transparent,
+      0.25px 0.25px transparent;
   }
-
-  .btn.disabled:hover,
-  .btn.disabled.isActive,
-  .btn.disabled {
-    background: var(--disabled) !important;
-    color: var(--on-disabled) !important;
-    cursor: default;
-    border: none;
+  .btn.textOnly:hover {
+    text-shadow:
+      -0.25px -0.25px 0 var(--primary),
+      0.25px 0.25px var(--primary);
   }
 
   .btn.danger {
@@ -171,18 +135,28 @@
     background: var(--surface);
   }
 
-  .btn.textOnly {
-    /* padding: 0 !important;
-		font-weight: bold !important; */
-    text-shadow:
-      -0.25px -0.25px 0 transparent,
-      0.25px 0.25px transparent;
+  .btn.isActive:hover,
+  .btn.isSelected:hover,
+  .btn.isActive,
+  .btn.isSelected {
+    box-shadow: none;
+    color: var(--on-primary);
+    background: var(--primary);
+    cursor: default;
   }
-  .btn.textOnly:hover {
-    /* font-weight: bold; */
-    text-shadow:
-      -0.25px -0.25px 0 var(--primary),
-      0.25px 0.25px var(--primary);
+
+  .btn.disabled:hover,
+  .btn.disabled.isActive,
+  .btn.disabled {
+    background: var(--disabled) !important;
+    color: var(--on-disabled) !important;
+    cursor: default;
+    border: none;
+    box-shadow: none;
+    text-shadow: none;
+  }
+  .btn.textOnly.disabled {
+    background: transparent !important;
   }
 
   .isFullRounded {

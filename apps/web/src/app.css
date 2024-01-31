@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /*
   reference: 
   - https://m3.material.io/styles/color/roles
@@ -30,4 +34,24 @@
 
 body {
 	font-family: Arial, Helvetica, sans-serif;
+}
+
+/*OVERIDE BUTTON VARIANT*/
+.btn.menu:hover {
+	background: var(--primary-container);
+}
+.btn.menu.isActive,
+.btn.menu.isActive:hover {
+	color: var(--primary) !important;
+	background: none !important;
+}
+.btn.menu.isActive::after {
+	content: '';
+	position: absolute;
+	left: 0.5rem;
+	top: 1.8rem;
+	width: calc(100% - 1rem);
+	height: 3px;
+	background: var(--primary);
+	border-radius: 9999px;
 }
