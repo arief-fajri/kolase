@@ -8,19 +8,23 @@
 	/*SURFACE*/
 	--surface: #ffffff;
 	--on-surface: #5a6474;
-	--surface-container: #f1f2f3;
-	--surface-container-low: #f8f8f8;
+	--surface-container: #e1e3e6;
+	--surface-container-low: #f1f2f3;
+	--surface-container-lowest: #f8f8f8;
 
 	/*PRIMARY*/
 	--primary: #5a6474;
 	--on-primary: #f8f8f8;
-	--primary-container: #757d8a;
+	--primary-container: #e1e3e6;
+	--on-primary-container: #757d8a;
 
 	/*SEMANTIC*/
-	--error: #b80672;
+	--error: #e86a6a;
 	--on-error: #ffffff;
 	--disabled: #f1f2f3;
-	--on-disabled: #c3c7ce;
+	--on-disabled: #e1e3e6;
+
+	/*DEFAULT*/
 	--default-shadow: rgba(0, 0, 0, 0.05) 0px 0px 4px, rgba(0, 0, 0, 0.15) 0px 2px 8px;
 }
 
