@@ -114,6 +114,7 @@
   }
 
   .btn.textOnly {
+    color: var(--primary);
     padding: 0 !important;
     text-shadow:
       -0.25px -0.25px 0 transparent,
