@@ -1,13 +1,16 @@
 <script>
   import { createEventDispatcher } from 'svelte';
 
+  let customClass = '';
+
+  export { customClass as class };
+
   export let text = 'text button';
   export let size = 'medium'; // textOnly, xsmall, small, medium, large, xlarge
   export let variant = 'primary'; // primary, secondary, tertiary, tab, menu, tag
   export let isActive = false;
   export let isSelected = false;
   export let isFullRounded = false;
-  export let customClass = '';
   export let disabled;
   export let processing;
 
