@@ -1,0 +1,19 @@
+{
+  "name": "@kolase/ui",
+  "version": "0.0.0",
+  "type": "module",
+  "module": "index.js",
+  "main": "index.js",
+  "exports": {
+    ".": {
+      "svelte": "./index.js"
+    }
+  },
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@kolase/eslint-config": "workspace:*",
+    "svelte": "^4.2.8"
+  }
+}
