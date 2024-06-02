@@ -30,13 +30,13 @@
 
 <aside
   bind:this={sidebarElem}
-  class="page-sidebar relative {classes} {maxDragWidth}"
+  class="page-sidebar {classes} {maxDragWidth}"
   style="{maxDragWidth ? `max-width: ${maxDragWidth};` : ''}{collapse
     ? `width: ${collapseWidth};`
     : ''}"
 >
   <slot />
-  {#if isDraggable && !collapse}
+  {#if isDraggable}
     <div class="draggable {dragPosition}">
       <DragLine
         on:dragstart={() => {
@@ -60,8 +60,8 @@
             class="absolute top-1/2 -translate-x-1/2 -tranlate-y-1/2"
             style={dragPosition === 'left' ? 'left: calc(50% - 4px);' : 'right: calc(-50% - 4px);'}
           >
-            <div class="px-[2.5px] py-1.5 bg-white border border-primary-200 rounded relative">
-              <div class="bg-primary-200 w-[1px] h-[28px]" />
+            <div class="px-[2.5px] py-1.5 bg-white border rounded relative">
+              <div class="w-[1px] h-[28px]" />
             </div>
           </div>
         </slot>
@@ -72,9 +72,12 @@
 
 <style lang="postcss">
   .page-sidebar {
-    @apply flex flex-col shrink-0 grow-0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    flex-shrink: 0;
     width: 321px;
-    /* transition: 300ms; */
   }
   .draggable {
     position: absolute;

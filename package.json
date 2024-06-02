@@ -1,11 +1,17 @@
 {
   "name": "kolase",
   "private": true,
+  "author": {
+    "name": "Arif Fajri",
+    "email": "arief.fajri191@gmail.com"
+  },
+  "license": "MIT",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "publish-packages": "turbo run build lint && changeset version && changeset publish"
   },
   "devDependencies": {
     "@kolase/eslint-config": "workspace:*",
@@ -18,7 +24,7 @@
     "turbo": "latest"
   },
   "packageManager": "pnpm@8.9.0",
-  "engines": {
-    "node": ">=18"
+  "dependencies": {
+    "@changesets/cli": "^2.27.5"
   }
 }

@@ -4,6 +4,7 @@
   "type": "module",
   "module": "index.js",
   "main": "index.js",
+  "svelte": "index.js",
   "exports": {
     ".": {
       "svelte": "./index.js"
@@ -15,5 +16,12 @@
   "devDependencies": {
     "@kolase/eslint-config": "workspace:*",
     "svelte": "^4.2.8"
-  }
+  },
+  "keywords": [
+    "svelte",
+    "sveltekit",
+    "component",
+    "tailwindcss",
+    "ui"
+  ]
 }

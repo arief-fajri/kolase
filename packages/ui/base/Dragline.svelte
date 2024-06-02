@@ -71,7 +71,6 @@
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   bind:this={elem}
   class="dragline"

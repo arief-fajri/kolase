@@ -2,7 +2,7 @@
 	import { PageWrapper, PageSidebar } from '@kolase/ui';
 </script>
 
-<PageSidebar>
+<PageSidebar isDraggable dragPosition="right">
 	<p>SIDEBAR</p>
 </PageSidebar>
 
