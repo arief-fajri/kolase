@@ -1,8 +1,12 @@
 {
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
-  "editor.detectIndentation": false,
+  "editor.detectIndentation": true,
+  "editor.insertSpaces": true,
   "[svelte]": {
     "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "files.associations": {
+    "*.css": "tailwindcss"
   }
 }

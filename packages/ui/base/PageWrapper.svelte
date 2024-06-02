@@ -10,7 +10,7 @@
 </script>
 
 <div
-  class="page-wrapper bg-primary-50 {classes}"
+  class="page-wrapper {classes}"
   class:center-content={center}
   on:scroll={(e) => {
     dispatch('scroll', e.target);
