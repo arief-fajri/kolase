@@ -55,14 +55,16 @@
           window.dispatchEvent(new Event('resize'));
         }}
       >
-        <div
-          class="absolute top-1/2 -translate-x-1/2 -tranlate-y-1/2"
-          style={dragPosition === 'left' ? 'left: calc(50% - 4px);' : 'right: calc(-50% - 4px);'}
-        >
-          <div class="px-[2.5px] py-1.5 bg-white border border-primary-200 rounded relative">
-            <div class="bg-primary-200 w-[1px] h-[28px]" />
+        <slot name="dragline">
+          <div
+            class="absolute top-1/2 -translate-x-1/2 -tranlate-y-1/2"
+            style={dragPosition === 'left' ? 'left: calc(50% - 4px);' : 'right: calc(-50% - 4px);'}
+          >
+            <div class="px-[2.5px] py-1.5 bg-white border border-primary-200 rounded relative">
+              <div class="bg-primary-200 w-[1px] h-[28px]" />
+            </div>
           </div>
-        </div>
+        </slot>
       </DragLine>
     </div>
   {/if}

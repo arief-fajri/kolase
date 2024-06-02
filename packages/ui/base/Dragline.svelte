@@ -104,14 +104,4 @@
   .dragline.isVertical {
     cursor: ns-resize;
   }
-  /* 
-  .dragline:hover,
-  .dragline.dragging {
-    box-shadow: inset 0 2px 0 0;
-  }
-
-  .dragline.isVertical:hover,
-  .dragline.isVertical.dragging {
-    box-shadow: inset 2px 0 0 0;
-  } */
 </style>
